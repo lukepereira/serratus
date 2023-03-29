@@ -1,7 +1,7 @@
 #!/bin/bash
 # run_resummarize
 #
-# Base: serratus-merge 
+# Base: serratus-merge
 
 set -eu
 PIPE_VERSION="0.3.0"
@@ -15,7 +15,7 @@ function usage {
   echo "    Required Parameters"
   echo "    -s    SRA Accession"
   echo "    -g    Genome identifier [cov3ma] (used for sumzer)"
-  echo "    -L    S3 bucket path [s3://lovelywater]"
+  echo "    -L    S3 bucket path [s3://lovelywater2]"
   echo ""
   echo "    Merge Parameters"
   echo "    -n    parallel CPU threads to use where applicable  [1]"
@@ -45,7 +45,7 @@ function usage {
 # Run Parameters
 SRA=''
 GENOME='cov3ma'
-S3='s3://lovelywater'
+S3='s3://lovelywater2'
 
 # Merge Options
 THREADS='1'
@@ -140,7 +140,7 @@ aws s3 cp $S3/bam/$SRA.bam ./$SRA.unsorted.bam
 
 # Summarize v2
 samtools view $SRA.unsorted.bam | \
-$summarizer 
+$summarizer
 
 # Sort
 samtools sort -@ $THREADS $SRA.unsorted.bam >\
